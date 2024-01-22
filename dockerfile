@@ -7,3 +7,17 @@ COPY ./requirements.txt /tmp/requirements.txt
 COPY ./app /app
 WORKDIR /app
 EXPOSE 8000
+
+RUN python -m venv /py && \ 
+    /python/bin/pip install --upgrade pip && \
+    /python/bin/pip install -r /tmp/requirements.txt && \
+    rm -rf /tmp && \
+    adduser \
+    --disabled-password \
+    --no-create-home \
+    django-user
+
+
+ENV PATH="/py/bin/:$PATH"
+
+USER django-user
